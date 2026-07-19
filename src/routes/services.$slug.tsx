@@ -51,7 +51,7 @@ function ServiceDetail() {
           <p className="mt-6 leading-relaxed">{svc.description}</p>
 
           <ul className="mt-8 grid gap-3">
-            {svc.bullets.map((b) => (
+            {svc.bullets.map((b: string) => (
               <li key={b} className="flex gap-3 items-start">
                 <CheckCircle2 className="h-5 w-5 mt-0.5 text-foreground/70 shrink-0" />
                 <span className="text-sm">{b}</span>
