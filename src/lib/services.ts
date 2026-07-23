@@ -1,9 +1,9 @@
-import laserImg from "@/assets/laser.jpg";
-import bendingImg from "@/assets/bending.jpg";
-import weldingImg from "@/assets/welding.jpg";
-import machiningImg from "@/assets/machining.jpg";
-import designImg from "@/assets/design.jpg";
-import designMfgImg from "@/assets/design-manufacture.jpg";
+import laserImg from "@/assets/ill-laser.jpg";
+import bendingImg from "@/assets/ill-bending.jpg";
+import weldingImg from "@/assets/ill-welding.jpg";
+import machiningImg from "@/assets/ill-machining.jpg";
+import designImg from "@/assets/ill-design.jpg";
+import designMfgImg from "@/assets/ill-fullcycle.jpg";
 
 export type Service = {
   slug: string;
@@ -87,8 +87,8 @@ export const services: Service[] = [
   },
   {
     slug: "design-manufacture",
-    title: "Проектирование с изготовлением",
-    short: "Полный цикл — от идеи до изделия",
+    title: "Производство полного цикла",
+    short: "От идеи до готового изделия",
     image: designMfgImg,
     bullets: [
       "Проработка ТЗ вместе с заказчиком",

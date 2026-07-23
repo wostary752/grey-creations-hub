@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Design system — светлые серые тона, промышленный минимализм */
+/* Design system — светло-серый премиальный минимализм */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -35,20 +35,44 @@
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
   --color-steel: var(--steel);
+  --color-brand: var(--brand);
 
   --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px oklch(0 0 0 / 0.06);
-  --shadow-elev: 0 2px 4px oklch(0 0 0 / 0.05), 0 20px 40px -12px oklch(0 0 0 / 0.12);
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.03), 0 4px 12px oklch(0 0 0 / 0.04);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px -6px oklch(0 0 0 / 0.06);
+  --shadow-elev: 0 4px 12px oklch(0 0 0 / 0.06), 0 24px 48px -16px oklch(0 0 0 / 0.14);
+  --shadow-glow: 0 0 0 1px oklch(0.55 0.13 250 / 0.15), 0 12px 32px -8px oklch(0.55 0.13 250 / 0.18);
 
-  --gradient-surface: linear-gradient(180deg, oklch(0.985 0.002 250) 0%, oklch(0.955 0.003 250) 100%);
-  --gradient-steel: linear-gradient(135deg, oklch(0.32 0.008 250) 0%, oklch(0.18 0.006 250) 100%);
+  --gradient-surface: linear-gradient(180deg, oklch(0.97 0.002 250) 0%, oklch(0.94 0.003 250) 100%);
+  --gradient-steel: linear-gradient(135deg, oklch(0.30 0.008 250) 0%, oklch(0.16 0.006 250) 100%);
+  --gradient-hero: linear-gradient(180deg, oklch(0.955 0.003 250 / 0.35) 0%, oklch(0.955 0.003 250 / 0.85) 60%, oklch(0.955 0.003 250) 100%);
+  --gradient-blue: linear-gradient(135deg, oklch(0.62 0.14 250) 0%, oklch(0.48 0.15 260) 100%);
+
+  --animate-fade-in-up: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-scale-in: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(16px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes scale-in {
+    0% { opacity: 0; transform: scale(0.96); }
+    100% { opacity: 1; transform: scale(1); }
+  }
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.985 0.002 250);
+  --radius: 0.75rem;
+
+  /* Светло-серый фон, белые карточки */
+  --background: oklch(0.955 0.003 250);      /* ~ #F3F4F6 */
   --foreground: oklch(0.18 0.006 250);
 
   --card: oklch(1 0 0);
@@ -56,23 +80,24 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.006 250);
 
-  --primary: oklch(0.25 0.006 250);
+  --primary: oklch(0.22 0.006 250);
   --primary-foreground: oklch(0.985 0.002 250);
   --secondary: oklch(0.94 0.003 250);
-  --secondary-foreground: oklch(0.25 0.006 250);
-  --muted: oklch(0.955 0.003 250);
+  --secondary-foreground: oklch(0.22 0.006 250);
+  --muted: oklch(0.945 0.003 250);
   --muted-foreground: oklch(0.5 0.008 250);
-  --accent: oklch(0.92 0.005 250);
+  --accent: oklch(0.93 0.005 250);
   --accent-foreground: oklch(0.22 0.006 250);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.985 0.002 250);
   --border: oklch(0.9 0.004 250);
   --input: oklch(0.92 0.004 250);
-  --ring: oklch(0.55 0.01 250);
+  --ring: oklch(0.55 0.13 250);
 
   --surface: oklch(0.97 0.003 250);
   --surface-foreground: oklch(0.2 0.006 250);
-  --steel: oklch(0.32 0.008 250);
+  --steel: oklch(0.30 0.008 250);
+  --brand: oklch(0.55 0.14 250);            /* акцентный синий */
 
   --sidebar: oklch(0.98 0.002 250);
   --sidebar-foreground: oklch(0.2 0.006 250);
@@ -91,6 +116,7 @@
   html {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
   }
   body {
     background-color: var(--color-background);
@@ -98,7 +124,7 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -115,8 +141,23 @@
 
 @utility eyebrow {
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-muted-foreground);
+  color: var(--color-brand);
   font-weight: 600;
+}
+
+@utility card-surface {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+@utility reveal {
+  animation: var(--animate-fade-in-up);
+}
+
+@utility reveal-slow {
+  animation: fade-in-up 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
