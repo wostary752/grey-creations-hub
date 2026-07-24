@@ -1,14 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState, useCallback } from "react";
 import { projects, type Project } from "@/lib/projects";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Выполненные проекты — МЕТАЛФОРМ" },
-      { name: "description", content: "Портфолио металлоконструкций и изделий, изготовленных на производстве МЕТАЛФОРМ: сварные рамы, кронштейны, опорные узлы, лазерная резка." },
-      { property: "og:title", content: "Выполненные проекты — МЕТАЛФОРМ" },
-      { property: "og:description", content: "Реальные производственные работы: рамы, узлы, кронштейны, детали лазерной резки." },
+      { title: "Портфолио — МЕТАЛФОРМ" },
+      { name: "description", content: "Кураторская фотогалерея реальных производственных работ МЕТАЛФОРМ: сварные конструкции, кронштейны, узлы, лазерная резка." },
+      { property: "og:title", content: "Портфолио — МЕТАЛФОРМ" },
+      { property: "og:description", content: "Ремесло через фотографию: сварка, резка, сборка, точная обработка." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: projects[0].image },
@@ -19,119 +20,90 @@ export const Route = createFileRoute("/projects")({
 });
 
 function ProjectsPage() {
-  // Editorial rhythm: split into visually intentional rows
-  const feature = projects[0];
-  const rowA = projects.slice(1, 3);   // portrait + landscape
-  const rowB = projects.slice(3, 5);   // landscape wide + square
-  const rowC = projects.slice(5, 8);   // trio
-  const rowD = projects.slice(8, 10);  // square + feature landscape
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+
+  const close = useCallback(() => setActiveIdx(null), []);
+  const next = useCallback(
+    () => setActiveIdx((i) => (i === null ? i : (i + 1) % projects.length)),
+    []
+  );
+  const prev = useCallback(
+    () => setActiveIdx((i) => (i === null ? i : (i - 1 + projects.length) % projects.length)),
+    []
+  );
+
+  useEffect(() => {
+    if (activeIdx === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [activeIdx, close, next, prev]);
 
   return (
     <div className="bg-white text-neutral-900">
       {/* ── Intro ────────────────────────────────────────────────── */}
-      <section className="container-tight pt-20 pb-14 md:pt-28 md:pb-20">
+      <section className="container-tight pt-20 pb-16 md:pt-28 md:pb-24">
         <div className="grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-2">
-            <div className="text-[10px] tracking-[0.3em] uppercase text-neutral-400 font-mono">
+            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-400">
               N<span className="mx-1">°</span>01 / Портфолио
             </div>
           </div>
           <div className="col-span-12 md:col-span-8">
             <h1 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight font-medium">
-              Выполненные<br />
-              <span className="text-neutral-400">проекты</span>
+              Ремесло<br />
+              <span className="text-neutral-400">в кадре</span>
             </h1>
-            <p className="mt-8 max-w-xl text-neutral-500 text-base md:text-lg leading-relaxed">
-              Реальные работы производства — от единичных узлов до серийных партий.
-              Часть заказов не публикуется по договорённости с клиентами.
+            <p className="mt-8 max-w-lg text-neutral-500 text-base md:text-lg leading-relaxed">
+              Кураторская подборка производственных снимков. Нажмите на любое изображение, чтобы увидеть подробности.
             </p>
           </div>
           <div className="col-span-12 md:col-span-2 md:text-right">
-            <div className="text-[10px] tracking-[0.3em] uppercase text-neutral-400 font-mono">
+            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-400">
               2023 — 2025
             </div>
           </div>
         </div>
       </section>
 
-      <TechDivider label="Избранное" index="001" />
+      <div className="container-tight">
+        <div className="flex items-center gap-6 border-t border-neutral-200 pt-4">
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-400">001</span>
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-500">Галерея</span>
+          <span className="ml-auto font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-300">
+            {String(projects.length).padStart(2, "0")} работ
+          </span>
+        </div>
+      </div>
 
-      {/* ── Feature project ─────────────────────────────────────── */}
+      {/* ── Masonry gallery ─────────────────────────────────────── */}
       <section className="container-tight py-14 md:py-20">
-        <FeatureCard project={feature} />
-      </section>
-
-      <TechDivider label="Металлоконструкции" index="002" />
-
-      {/* ── Row A: portrait + landscape ─────────────────────────── */}
-      <section className="container-tight py-14 md:py-20">
-        <div className="grid grid-cols-12 gap-6 md:gap-8">
-          <div className="col-span-12 md:col-span-5">
-            <ProjectCard project={rowA[0]} aspectClass="aspect-[3/4]" />
-          </div>
-          <div className="col-span-12 md:col-span-7 md:pt-24">
-            <ProjectCard project={rowA[1]} aspectClass="aspect-[4/3]" />
-          </div>
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 md:gap-8 [column-fill:_balance]">
+          {projects.map((p, i) => (
+            <GalleryTile key={p.id} project={p} onOpen={() => setActiveIdx(i)} />
+          ))}
         </div>
       </section>
 
-      {/* ── Row B: wide + square ────────────────────────────────── */}
-      <section className="container-tight py-14 md:py-20">
-        <div className="grid grid-cols-12 gap-6 md:gap-8">
-          <div className="col-span-12 md:col-span-8">
-            <ProjectCard project={rowB[0]} aspectClass="aspect-[16/10]" />
-          </div>
-          <div className="col-span-12 md:col-span-4 md:pt-16">
-            <ProjectCard project={rowB[1]} aspectClass="aspect-square" />
-          </div>
-        </div>
-      </section>
-
-      <TechDivider label="Точная обработка" index="003" />
-
-      {/* ── Row C: trio ─────────────────────────────────────────── */}
-      <section className="container-tight py-14 md:py-20">
-        <div className="grid grid-cols-12 gap-6 md:gap-8">
-          <div className="col-span-12 md:col-span-4">
-            <ProjectCard project={rowC[0]} aspectClass="aspect-[4/5]" />
-          </div>
-          <div className="col-span-12 md:col-span-4 md:pt-20">
-            <ProjectCard project={rowC[1]} aspectClass="aspect-[4/5]" />
-          </div>
-          <div className="col-span-12 md:col-span-4">
-            <ProjectCard project={rowC[2]} aspectClass="aspect-[4/5]" />
-          </div>
-        </div>
-      </section>
-
-      {/* ── Row D: square + wide feature ────────────────────────── */}
-      <section className="container-tight py-14 md:py-20">
-        <div className="grid grid-cols-12 gap-6 md:gap-8">
-          <div className="col-span-12 md:col-span-4 md:pt-24">
-            <ProjectCard project={rowD[0]} aspectClass="aspect-square" />
-          </div>
-          <div className="col-span-12 md:col-span-8">
-            <ProjectCard project={rowD[1]} aspectClass="aspect-[16/10]" />
-          </div>
-        </div>
-      </section>
-
-      <TechDivider label="Связаться" index="004" />
-
-      {/* ── CTA ─────────────────────────────────────────────────── */}
-      <section className="container-tight py-20 md:py-32">
+      {/* ── Quiet CTA ───────────────────────────────────────────── */}
+      <section className="container-tight py-20 md:py-32 border-t border-neutral-200">
         <div className="grid grid-cols-12 gap-8 items-end">
           <div className="col-span-12 md:col-span-8">
-            <div className="text-[10px] tracking-[0.3em] uppercase text-neutral-400 font-mono">
+            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-400">
               Ваш проект
             </div>
             <h2 className="mt-4 font-display text-4xl md:text-6xl leading-[1.05] tracking-tight font-medium">
               Есть чертёж<br />
               <span className="text-neutral-400">или задача?</span>
             </h2>
-            <p className="mt-6 max-w-lg text-neutral-500 leading-relaxed">
-              Пришлите файл или описание — оценим сроки и стоимость в течение рабочего дня.
-            </p>
           </div>
           <div className="col-span-12 md:col-span-4 md:text-right">
             <Link
@@ -144,115 +116,132 @@ function ProjectsPage() {
           </div>
         </div>
       </section>
+
+      {activeIdx !== null && (
+        <Lightbox
+          project={projects[activeIdx]}
+          index={activeIdx}
+          total={projects.length}
+          onClose={close}
+          onNext={next}
+          onPrev={prev}
+        />
+      )}
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────── */
 
-function TechDivider({ label, index }: { label: string; index: string }) {
+function GalleryTile({ project, onOpen }: { project: Project; onOpen: () => void }) {
   return (
-    <div className="container-tight">
-      <div className="flex items-center gap-6 border-t border-neutral-200 pt-4">
-        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-400">
-          {index}
-        </span>
-        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-500">
-          {label}
-        </span>
-        <span className="ml-auto font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-300">
-          ——
-        </span>
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group relative mb-6 md:mb-8 block w-full overflow-hidden rounded-[16px] border border-neutral-200 bg-neutral-100 break-inside-avoid text-left"
+    >
+      <img
+        src={project.image}
+        alt=""
+        loading="lazy"
+        className="block w-full h-auto object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/30 transition-colors duration-500" />
+      <div className="pointer-events-none absolute right-4 top-4 h-10 w-10 rounded-full bg-white flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+        <ArrowUpRight className="h-4 w-4 text-neutral-900" />
       </div>
-    </div>
+    </button>
   );
 }
 
-function ProjectCard({
+function Lightbox({
   project,
-  aspectClass,
+  index,
+  total,
+  onClose,
+  onNext,
+  onPrev,
 }: {
   project: Project;
-  aspectClass: string;
+  index: number;
+  total: number;
+  onClose: () => void;
+  onNext: () => void;
+  onPrev: () => void;
 }) {
   return (
-    <article className="group cursor-pointer">
-      <div
-        className={`relative overflow-hidden rounded-[16px] border border-neutral-200 bg-neutral-100 ${aspectClass}`}
-      >
-        <img
-          src={project.image}
-          alt={project.title}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
-        />
-        <div className="absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/20 transition-colors duration-500" />
-        <div className="absolute right-4 top-4 h-10 w-10 rounded-full bg-white/0 group-hover:bg-white flex items-center justify-center transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0">
-          <ArrowUpRight className="h-4 w-4 text-neutral-900" />
+    <div className="fixed inset-0 z-50 bg-white animate-fade-in">
+      {/* Top bar */}
+      <div className="absolute top-0 inset-x-0 z-10 flex items-center justify-between px-6 md:px-10 py-5 border-b border-neutral-200 bg-white">
+        <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-500">
+          {String(index + 1).padStart(2, "0")} <span className="text-neutral-300">/ {String(total).padStart(2, "0")}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onPrev}
+            aria-label="Предыдущее"
+            className="h-10 w-10 grid place-items-center rounded-full border border-neutral-200 hover:bg-neutral-50 transition"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            onClick={onNext}
+            aria-label="Следующее"
+            className="h-10 w-10 grid place-items-center rounded-full border border-neutral-200 hover:bg-neutral-50 transition"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+          <button
+            onClick={onClose}
+            aria-label="Закрыть"
+            className="ml-2 h-10 w-10 grid place-items-center rounded-full bg-neutral-900 text-white hover:bg-neutral-700 transition"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
       </div>
 
-      <div className="mt-5 flex items-start justify-between gap-6">
-        <div className="min-w-0">
-          <div className="font-mono text-[10px] tracking-[0.28em] uppercase text-neutral-500">
-            {project.category}
-          </div>
-          <h3 className="mt-2 font-display text-xl md:text-2xl font-medium leading-snug tracking-tight text-neutral-900">
-            {project.title}
-          </h3>
-          {project.summary && (
-            <p className="mt-2 text-sm text-neutral-500 leading-relaxed max-w-md">
-              {project.summary}
-            </p>
-          )}
+      {/* Content */}
+      <div className="h-full pt-[72px] grid grid-cols-12 gap-0">
+        <div className="col-span-12 md:col-span-8 lg:col-span-9 bg-neutral-50 flex items-center justify-center p-6 md:p-12 overflow-hidden">
+          <img
+            key={project.id}
+            src={project.image}
+            alt={project.title}
+            className="max-h-full max-w-full object-contain animate-fade-in"
+          />
         </div>
-        <div className="shrink-0 font-mono text-[11px] tracking-[0.2em] text-neutral-400 pt-1">
-          {project.year}
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function FeatureCard({ project }: { project: Project }) {
-  return (
-    <article className="group cursor-pointer">
-      <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
-        <div className="col-span-12 md:col-span-9">
-          <div className="relative overflow-hidden rounded-[18px] border border-neutral-200 bg-neutral-100 aspect-[16/9]">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.03]"
-            />
-            <div className="absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/25 transition-colors duration-500" />
-            <div className="absolute left-5 top-5 font-mono text-[10px] tracking-[0.3em] uppercase text-white/80 mix-blend-difference">
-              Feature project
+        <aside className="col-span-12 md:col-span-4 lg:col-span-3 border-l border-neutral-200 p-8 md:p-10 flex flex-col justify-between overflow-y-auto">
+          <div>
+            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-500">
+              {project.category}
             </div>
-            <div className="absolute right-5 bottom-5 h-12 w-12 rounded-full bg-white flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-              <ArrowUpRight className="h-5 w-5 text-neutral-900" />
+            <h2 className="mt-4 font-display text-2xl md:text-3xl font-medium leading-[1.15] tracking-tight">
+              {project.title}
+            </h2>
+            <div className="mt-6 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-neutral-400">
+              <span className="h-px w-8 bg-neutral-300" />
+              {project.year}
             </div>
+            {project.summary && (
+              <p className="mt-8 text-sm text-neutral-600 leading-relaxed">
+                {project.summary}
+              </p>
+            )}
           </div>
-        </div>
 
-        <div className="col-span-12 md:col-span-3">
-          <div className="font-mono text-[10px] tracking-[0.28em] uppercase text-neutral-500">
-            {project.category}
+          <div className="mt-10 pt-6 border-t border-neutral-200">
+            <Link
+              to="/request"
+              onClick={onClose}
+              className="group inline-flex items-center gap-3 text-sm font-medium border-b border-neutral-900 pb-1 hover:gap-5 transition-all"
+            >
+              Обсудить похожий проект
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
-          <h2 className="mt-3 font-display text-3xl md:text-4xl font-medium leading-[1.1] tracking-tight">
-            {project.title}
-          </h2>
-          <div className="mt-6 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] text-neutral-400">
-            <span className="h-px w-8 bg-neutral-300" />
-            {project.year}
-          </div>
-          {project.summary && (
-            <p className="mt-6 text-sm text-neutral-500 leading-relaxed">
-              {project.summary}
-            </p>
-          )}
-        </div>
+        </aside>
       </div>
-    </article>
+    </div>
   );
 }
