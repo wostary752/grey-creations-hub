@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, Factory, Ruler, Wrench, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Layers, Sparkles, Award } from "lucide-react";
 import heroImg from "@/assets/hero-new.jpg";
 import { services } from "@/lib/services";
 import { Button } from "@/components/ui/button";
