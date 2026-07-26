@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAsset from "@/assets/logo.png.asset.json";
 
 const nav = [
   { to: "/", label: "Главная" },
@@ -15,9 +16,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="container-tight flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg tracking-tight">
-          <span className="inline-block h-6 w-6 rounded-sm" style={{ background: "var(--gradient-steel)" }} />
-          ЛИДЕР МЕТАЛ
+        <Link to="/" className="flex items-center gap-2.5 font-display font-bold text-lg tracking-tight">
+          <img src={logoAsset.url} alt="ЛИДЕР МЕТАЛЛ" className="h-10 w-auto md:h-11 object-contain" />
+          ЛИДЕР МЕТАЛЛ
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           {nav.map((n) => (

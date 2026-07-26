@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contacts")({
   head: () => ({
     meta: [
-      { title: "Контакты — ЛИДЕР МЕТАЛ" },
-      { name: "description", content: "Свяжитесь с производственным предприятием ЛИДЕР МЕТАЛ: телефон, e-mail, адрес производства, часы работы." },
-      { property: "og:title", content: "Контакты — ЛИДЕР МЕТАЛ" },
+      { title: "Контакты — ЛИДЕР МЕТАЛЛ" },
+      { name: "description", content: "Свяжитесь с производственным предприятием ЛИДЕР МЕТАЛЛ: телефон, e-mail, адрес производства, часы работы." },
+      { property: "og:title", content: "Контакты — ЛИДЕР МЕТАЛЛ" },
       { property: "og:description", content: "Телефон, e-mail, адрес производства." },
     ],
   }),

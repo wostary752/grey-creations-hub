@@ -6,9 +6,9 @@ import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Портфолио — ЛИДЕР МЕТАЛ" },
-      { name: "description", content: "Кураторская фотогалерея реальных производственных работ ЛИДЕР МЕТАЛ: сварные конструкции, кронштейны, узлы, лазерная резка." },
-      { property: "og:title", content: "Портфолио — ЛИДЕР МЕТАЛ" },
+      { title: "Портфолио — ЛИДЕР МЕТАЛЛ" },
+      { name: "description", content: "Кураторская фотогалерея реальных производственных работ ЛИДЕР МЕТАЛЛ: сварные конструкции, кронштейны, узлы, лазерная резка." },
+      { property: "og:title", content: "Портфолио — ЛИДЕР МЕТАЛЛ" },
       { property: "og:description", content: "Ремесло через фотографию: сварка, резка, сборка, точная обработка." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
