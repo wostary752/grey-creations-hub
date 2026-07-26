@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, Factory, Ruler, Wrench, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Layers, Sparkles, Award } from "lucide-react";
 import heroImg from "@/assets/hero-new.jpg";
 import { services } from "@/lib/services";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ function Home() {
         <div className="absolute inset-0">
           <img
             src={heroImg}
-            alt="МЕТАЛФОРМ — производство металлоизделий"
+            alt="ЛИДЕР МЕТАЛ — производство металлоизделий"
             width={1920}
             height={1200}
             className="h-full w-full object-cover"
@@ -50,10 +50,25 @@ function Home() {
             </div>
           </div>
 
-          <div className="mt-20 grid gap-4 sm:grid-cols-3 max-w-3xl">
-            <Stat icon={<Factory className="h-5 w-5" />} k="12+" v="лет на рынке" delay={0.1} />
-            <Stat icon={<Ruler className="h-5 w-5" />} k="0.1 мм" v="точность реза" delay={0.2} />
-            <Stat icon={<Wrench className="h-5 w-5" />} k="500+" v="выполненных проектов" delay={0.3} />
+          <div className="mt-20 grid gap-4 sm:grid-cols-3 max-w-4xl">
+            <Advantage
+              icon={<Award className="h-5 w-5" />}
+              title="6+ лет"
+              text="опыт работы в металлообработке"
+              delay={0.1}
+            />
+            <Advantage
+              icon={<Clock className="h-5 w-5" />}
+              title="Расчёт стоимости"
+              text="в течение рабочего дня"
+              delay={0.2}
+            />
+            <Advantage
+              icon={<Layers className="h-5 w-5" />}
+              title="Полный цикл"
+              text="от проектирования до готового изделия"
+              delay={0.3}
+            />
           </div>
         </div>
       </section>
@@ -180,22 +195,30 @@ function Home() {
   );
 }
 
-function Stat({ icon, k, v, delay = 0 }: { icon: React.ReactNode; k: string; v: string; delay?: number }) {
+function Advantage({
+  icon,
+  title,
+  text,
+  delay = 0,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  delay?: number;
+}) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="flex items-center gap-4 rounded-xl border border-border bg-card/90 backdrop-blur px-5 py-4 shadow-[var(--shadow-soft)] reveal"
+      className="group flex h-full flex-col justify-between gap-6 rounded-3xl border border-border/70 bg-card/95 backdrop-blur p-7 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-elev)] reveal"
     >
-      <div
-        className="flex h-11 w-11 items-center justify-center rounded-lg text-white"
-        style={{ background: "var(--gradient-steel)" }}
-      >
+      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-background text-foreground/80 transition-colors group-hover:text-foreground">
         {icon}
       </div>
       <div>
-        <div className="text-2xl font-bold font-display tracking-tight">{k}</div>
-        <div className="text-[11px] text-muted-foreground uppercase tracking-[0.15em]">{v}</div>
+        <div className="font-display text-xl font-semibold tracking-tight text-foreground">{title}</div>
+        <div className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{text}</div>
       </div>
     </div>
   );
 }
+

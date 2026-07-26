@@ -69,9 +69,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "МЕТАЛФОРМ — производство металлоизделий и конструкторское бюро" },
+      { title: "ЛИДЕР МЕТАЛ — производство металлоизделий и конструкторское бюро" },
       { name: "description", content: "Лазерная резка, гибка, сварные работы, механическая обработка. Собственное КБ. Проектирование изделий на заказ с последующим изготовлением." },
-      { property: "og:title", content: "МЕТАЛФОРМ — производство металлоизделий и конструкторское бюро" },
+      { property: "og:title", content: "ЛИДЕР МЕТАЛ — производство металлоизделий и конструкторское бюро" },
       { property: "og:description", content: "Полный цикл: проектирование, металлообработка, изготовление." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -95,8 +95,18 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="ru">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=111044901','ym');ym(111044901,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",accurateTrackBounce:true,trackLinks:true});`,
+          }}
+        />
       </head>
       <body>
+        <noscript>
+          <div>
+            <img src="https://mc.yandex.ru/watch/111044901" style={{ position: "absolute", left: "-9999px" }} alt="" />
+          </div>
+        </noscript>
         {children}
         <Scripts />
       </body>

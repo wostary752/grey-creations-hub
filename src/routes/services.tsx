@@ -5,9 +5,9 @@ import { services } from "@/lib/services";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Услуги — МЕТАЛФОРМ" },
+      { title: "Услуги — ЛИДЕР МЕТАЛ" },
       { name: "description", content: "Лазерная резка, гибка, сварные работы, механическая обработка, проектирование изделий на заказ и производство полного цикла." },
-      { property: "og:title", content: "Услуги производства — МЕТАЛФОРМ" },
+      { property: "og:title", content: "Услуги производства — ЛИДЕР МЕТАЛ" },
       { property: "og:description", content: "Полный список услуг предприятия." },
     ],
   }),
