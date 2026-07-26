@@ -26,9 +26,10 @@ export function SiteFooter() {
         <div>
           <div className="eyebrow mb-3">Контакты</div>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>+7 (495) 000-00-00</li>
-            <li>info@metalform.ru</li>
-            <li>г. Москва, ул. Промышленная, 12</li>
+            <li>+7 (921) 583-23-47</li>
+            <li>+7 (981) 734-45-36</li>
+            <li>leader-metal@mail.ru</li>
+            <li>196140, Санкт-Петербург, Пулковское ш., 80</li>
             <li>Пн–Пт 9:00–18:00</li>
           </ul>
         </div>
