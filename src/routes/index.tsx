@@ -50,10 +50,25 @@ function Home() {
             </div>
           </div>
 
-          <div className="mt-20 grid gap-4 sm:grid-cols-3 max-w-3xl">
-            <Stat icon={<Factory className="h-5 w-5" />} k="12+" v="лет на рынке" delay={0.1} />
-            <Stat icon={<Ruler className="h-5 w-5" />} k="0.1 мм" v="точность реза" delay={0.2} />
-            <Stat icon={<Wrench className="h-5 w-5" />} k="500+" v="выполненных проектов" delay={0.3} />
+          <div className="mt-20 grid gap-4 sm:grid-cols-3 max-w-4xl">
+            <Advantage
+              icon={<Award className="h-5 w-5" />}
+              title="6+ лет"
+              text="опыт работы в металлообработке"
+              delay={0.1}
+            />
+            <Advantage
+              icon={<Clock className="h-5 w-5" />}
+              title="Расчёт стоимости"
+              text="в течение рабочего дня"
+              delay={0.2}
+            />
+            <Advantage
+              icon={<Layers className="h-5 w-5" />}
+              title="Полный цикл"
+              text="от проектирования до готового изделия"
+              delay={0.3}
+            />
           </div>
         </div>
       </section>
