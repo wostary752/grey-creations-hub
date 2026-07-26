@@ -69,9 +69,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ЛИДЕР МЕТАЛ — производство металлоизделий и конструкторское бюро" },
+      { title: "ЛИДЕР МЕТАЛЛ — производство металлоизделий и конструкторское бюро" },
       { name: "description", content: "Лазерная резка, гибка, сварные работы, механическая обработка. Собственное КБ. Проектирование изделий на заказ с последующим изготовлением." },
-      { property: "og:title", content: "ЛИДЕР МЕТАЛ — производство металлоизделий и конструкторское бюро" },
+      { property: "og:title", content: "ЛИДЕР МЕТАЛЛ — производство металлоизделий и конструкторское бюро" },
       { property: "og:description", content: "Полный цикл: проектирование, металлообработка, изготовление." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

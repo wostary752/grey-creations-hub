@@ -16,7 +16,7 @@ function Home() {
         <div className="absolute inset-0">
           <img
             src={heroImg}
-            alt="ЛИДЕР МЕТАЛ — производство металлоизделий"
+            alt="ЛИДЕР МЕТАЛЛ — производство металлоизделий"
             width={1920}
             height={1200}
             className="h-full w-full object-cover"
