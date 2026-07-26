@@ -25,13 +25,26 @@ export function RequestForm({ preset }: { preset?: Preset }) {
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formEl = e.currentTarget;
     setSubmitting(true);
-    // имитация отправки — реального бэкенда сейчас нет
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitting(false);
-    setSent(true);
-    (e.currentTarget as HTMLFormElement).reset();
-    setFiles([]);
+    try {
+      const fd = new FormData(formEl);
+      files.forEach((f) => fd.append("attachments", f, f.name));
+      const res = await fetch("https://formspree.io/f/mzdnyzzp", {
+        method: "POST",
+        body: fd,
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error("Ошибка отправки");
+      setSent(true);
+      formEl.reset();
+      setFiles([]);
+    } catch (err) {
+      console.error(err);
+      alert("Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами напрямую.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
