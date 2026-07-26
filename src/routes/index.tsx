@@ -195,22 +195,30 @@ function Home() {
   );
 }
 
-function Stat({ icon, k, v, delay = 0 }: { icon: React.ReactNode; k: string; v: string; delay?: number }) {
+function Advantage({
+  icon,
+  title,
+  text,
+  delay = 0,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  delay?: number;
+}) {
   return (
     <div
       style={{ animationDelay: `${delay}s` }}
-      className="flex items-center gap-4 rounded-xl border border-border bg-card/90 backdrop-blur px-5 py-4 shadow-[var(--shadow-soft)] reveal"
+      className="group flex h-full flex-col justify-between gap-6 rounded-3xl border border-border/70 bg-card/95 backdrop-blur p-7 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-elev)] reveal"
     >
-      <div
-        className="flex h-11 w-11 items-center justify-center rounded-lg text-white"
-        style={{ background: "var(--gradient-steel)" }}
-      >
+      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-background text-foreground/80 transition-colors group-hover:text-foreground">
         {icon}
       </div>
       <div>
-        <div className="text-2xl font-bold font-display tracking-tight">{k}</div>
-        <div className="text-[11px] text-muted-foreground uppercase tracking-[0.15em]">{v}</div>
+        <div className="font-display text-xl font-semibold tracking-tight text-foreground">{title}</div>
+        <div className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{text}</div>
       </div>
     </div>
   );
 }
+
