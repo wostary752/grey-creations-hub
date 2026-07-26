@@ -4,9 +4,9 @@ import { RequestForm } from "@/components/RequestForm";
 export const Route = createFileRoute("/request")({
   head: () => ({
     meta: [
-      { title: "Оставить заявку — МЕТАЛФОРМ" },
+      { title: "Оставить заявку — ЛИДЕР МЕТАЛ" },
       { name: "description", content: "Быстрая заявка или расширенное ТЗ — прикрепите фото и чертежи, укажите контакт, и мы свяжемся с вами." },
-      { property: "og:title", content: "Оставить заявку — МЕТАЛФОРМ" },
+      { property: "og:title", content: "Оставить заявку — ЛИДЕР МЕТАЛ" },
       { property: "og:description", content: "Быстрая заявка и расширенное ТЗ." },
     ],
   }),

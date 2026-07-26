@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border bg-muted/40">
       <div className="container-tight py-14 grid gap-10 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="font-display font-bold text-lg">МЕТАЛФОРМ</div>
+          <div className="font-display font-bold text-lg">ЛИДЕР МЕТАЛ</div>
           <p className="mt-3 text-sm text-muted-foreground max-w-sm">
             Производство металлоизделий полного цикла с собственным конструкторским бюро. От единичного заказа до серии.
           </p>
@@ -35,7 +35,7 @@ export function SiteFooter() {
       </div>
       <div className="hairline">
         <div className="container-tight py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
-          <span>© {new Date().getFullYear()} МЕТАЛФОРМ. Все права защищены.</span>
+          <span>© {new Date().getFullYear()} ЛИДЕР МЕТАЛ. Все права защищены.</span>
           <span>Производство. Проектирование. Металлообработка.</span>
         </div>
       </div>

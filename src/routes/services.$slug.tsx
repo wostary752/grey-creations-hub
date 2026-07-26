@@ -31,9 +31,9 @@ export const Route = createFileRoute("/services/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.svc.title} — МЕТАЛФОРМ` },
+          { title: `${loaderData.svc.title} — ЛИДЕР МЕТАЛ` },
           { name: "description", content: loaderData.svc.description.slice(0, 160) },
-          { property: "og:title", content: `${loaderData.svc.title} — МЕТАЛФОРМ` },
+          { property: "og:title", content: `${loaderData.svc.title} — ЛИДЕР МЕТАЛ` },
           { property: "og:description", content: loaderData.svc.short },
           { property: "og:image", content: loaderData.svc.image },
           { name: "twitter:image", content: loaderData.svc.image },
