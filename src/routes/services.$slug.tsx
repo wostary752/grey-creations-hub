@@ -216,7 +216,7 @@ function ServiceDetail() {
               Все проекты <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 grid-cols-2 md:grid-cols-3">
             {samples.map((p, i) => (
               <div
                 key={p.id}
@@ -224,16 +224,12 @@ function ServiceDetail() {
                 className="reveal group overflow-hidden rounded-2xl border border-border bg-background shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all"
               >
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
-                  <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-[900ms] ease-out" />
-                </div>
-                <div className="p-5">
-                  <div className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">{p.category}</div>
-                  <h3 className="mt-2 font-display font-semibold">{p.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{p.summary}</p>
+                  <img src={p.image} alt="Пример работы" loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-[900ms] ease-out" />
                 </div>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -279,10 +275,10 @@ function ServiceDetail() {
               </div>
             </div>
             <div className="grid gap-2.5">
-              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (495) 000-00-00" href="tel:+74950000000" />
-              <ContactRow icon={<Send className="h-4 w-4" />} label="Telegram" value="@metalform" href="https://t.me/metalform" />
-              <ContactRow icon={<MessageCircle className="h-4 w-4" />} label="WhatsApp" value="+7 (901) 000-00-00" href="https://wa.me/79010000000" />
-              <ContactRow icon={<Mail className="h-4 w-4" />} label="E-mail" value="info@metalform.ru" href="mailto:info@metalform.ru" />
+              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (921) 583-23-47" href="tel:+79215832347" />
+              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (981) 734-45-36" href="tel:+79817344536" />
+              <ContactRow icon={<Mail className="h-4 w-4" />} label="E-mail" value="leader-metal@mail.ru" href="mailto:leader-metal@mail.ru" />
+              <ContactRow icon={<Send className="h-4 w-4" />} label="Адрес" value="СПб, Пулковское ш., 80" href="/contacts" />
             </div>
           </div>
         </div>

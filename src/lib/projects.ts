@@ -8,119 +8,39 @@ import angleBrackets from "@/assets/portfolio/angle-brackets.jpg.asset.json";
 import postBases from "@/assets/portfolio/post-bases.jpg.asset.json";
 import profileBatch from "@/assets/portfolio/profile-batch.jpg.asset.json";
 import laserParts from "@/assets/portfolio/laser-parts.jpg.asset.json";
+import img42 from "@/assets/portfolio/images-4-2.jpg.asset.json";
+import img52 from "@/assets/portfolio/images-5-2.jpg.asset.json";
+import img6 from "@/assets/portfolio/images-6.jpg.asset.json";
+import img7 from "@/assets/portfolio/images-7.jpg.asset.json";
+import img8 from "@/assets/portfolio/images-8.jpg.asset.json";
+import img9 from "@/assets/portfolio/images-9.jpg.asset.json";
+import img10 from "@/assets/portfolio/images-10.jpg.asset.json";
+import img11 from "@/assets/portfolio/images-11.jpg.asset.json";
+import img12 from "@/assets/portfolio/images-12.jpg.asset.json";
 
 export type Project = {
   id: string;
-  title: string;
-  category: string;
-  year: string;
   image: string;
-  summary: string;
-  /** Orientation hint for editorial layout */
-  aspect: "landscape" | "portrait" | "square";
-  /** Feature size in the mosaic */
-  size: "feature" | "large" | "medium" | "small";
 };
 
 export const projects: Project[] = [
-  {
-    id: "1",
-    title: "Сварная рама сборочного стенда",
-    category: "Сварные металлоконструкции",
-    year: "2025",
-    image: weldingFrame.url,
-    summary: "Регулируемый каркас из профильной трубы для промышленной сборки.",
-    aspect: "square",
-    size: "feature",
-  },
-  {
-    id: "2",
-    title: "Опорные базы колонн",
-    category: "Резка + сварка",
-    year: "2025",
-    image: postBases.url,
-    summary: "Партия опорных узлов из листа 10 мм с фрезерованными отверстиями.",
-    aspect: "portrait",
-    size: "large",
-  },
-  {
-    id: "3",
-    title: "Кронштейны монтажные",
-    category: "Лазерная резка + гибка",
-    year: "2025",
-    image: angleBrackets.url,
-    summary: "Серия угловых кронштейнов с резьбовыми втулками.",
-    aspect: "landscape",
-    size: "medium",
-  },
-  {
-    id: "4",
-    title: "Балочные закладные",
-    category: "Сварка",
-    year: "2024",
-    image: beamBrackets.url,
-    summary: "Закладные элементы для несущих балок промышленного здания.",
-    aspect: "landscape",
-    size: "large",
-  },
-  {
-    id: "5",
-    title: "Перфорированный швеллер",
-    category: "Лазерная резка",
-    year: "2024",
-    image: channelPerforated.url,
-    summary: "Гнутый профиль с точной перфорацией по чертежу.",
-    aspect: "square",
-    size: "medium",
-  },
-  {
-    id: "6",
-    title: "Проушины подъёмные",
-    category: "Резка + сварка",
-    year: "2024",
-    image: liftingLugs.url,
-    summary: "Такелажные проушины с контролем сварных швов.",
-    aspect: "landscape",
-    size: "medium",
-  },
-  {
-    id: "7",
-    title: "Узлы соединения рамы",
-    category: "Сварные работы",
-    year: "2024",
-    image: weldedJoint.url,
-    summary: "Сварка ответственных узлов с последующей зачисткой.",
-    aspect: "landscape",
-    size: "large",
-  },
-  {
-    id: "8",
-    title: "Регулируемые стойки",
-    category: "Проектирование + изготовление",
-    year: "2023",
-    image: adjustableFrame.url,
-    summary: "Стойки с регулировкой по высоте и фиксирующими рукоятками.",
-    aspect: "landscape",
-    size: "medium",
-  },
-  {
-    id: "9",
-    title: "Серия профильных балок",
-    category: "Резка + сварка",
-    year: "2023",
-    image: profileBatch.url,
-    summary: "Партия унифицированных балок по повторяющейся оснастке.",
-    aspect: "square",
-    size: "medium",
-  },
-  {
-    id: "10",
-    title: "Комплект деталей лазерной резки",
-    category: "Лазерная резка",
-    year: "2023",
-    image: laserParts.url,
-    summary: "Серийные детали из листовой стали для машиностроения.",
-    aspect: "landscape",
-    size: "feature",
-  },
+  { id: "1", image: weldingFrame.url },
+  { id: "2", image: postBases.url },
+  { id: "n1", image: img42.url },
+  { id: "3", image: angleBrackets.url },
+  { id: "n2", image: img7.url },
+  { id: "4", image: beamBrackets.url },
+  { id: "n3", image: img8.url },
+  { id: "5", image: channelPerforated.url },
+  { id: "n4", image: img9.url },
+  { id: "6", image: liftingLugs.url },
+  { id: "n5", image: img10.url },
+  { id: "7", image: weldedJoint.url },
+  { id: "n6", image: img11.url },
+  { id: "8", image: adjustableFrame.url },
+  { id: "n7", image: img12.url },
+  { id: "9", image: profileBatch.url },
+  { id: "n8", image: img52.url },
+  { id: "10", image: laserParts.url },
+  { id: "n9", image: img6.url },
 ];

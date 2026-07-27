@@ -116,7 +116,9 @@
   html {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    /* smooth scrolling disabled to prevent jump-to-top animation on route change */
   }
   body {
     background-color: var(--color-background);
