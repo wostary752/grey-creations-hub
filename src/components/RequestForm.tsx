@@ -29,23 +29,37 @@ export function RequestForm({ preset }: { preset?: Preset }) {
     setSubmitting(true);
     try {
       const fd = new FormData(formEl);
-      files.forEach((f) => fd.append("attachments", f, f.name));
+      // Formspree expects file inputs with a name; use "file" (single) or "file[]" (multiple)
+      files.forEach((f) => fd.append("file[]", f, f.name));
+      if (files.length > 0) {
+        fd.append("_attachments_note", `Прикреплено файлов: ${files.length} (${files.map((f) => f.name).join(", ")})`);
+      }
       const res = await fetch("https://formspree.io/f/mzdnyzzp", {
         method: "POST",
         body: fd,
         headers: { Accept: "application/json" },
       });
-      if (!res.ok) throw new Error("Ошибка отправки");
+      if (!res.ok) {
+        let msg = `Ошибка отправки (${res.status})`;
+        try {
+          const data = await res.json();
+          if (data?.errors?.length) msg = data.errors.map((x: { message?: string }) => x.message).filter(Boolean).join("; ") || msg;
+        } catch {
+          /* ignore */
+        }
+        throw new Error(msg);
+      }
       setSent(true);
       formEl.reset();
       setFiles([]);
     } catch (err) {
       console.error(err);
-      alert("Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами напрямую.");
+      alert(`Не удалось отправить заявку. ${err instanceof Error ? err.message : ""}\nПопробуйте ещё раз или напишите нам напрямую: leader-metal@mail.ru`);
     } finally {
       setSubmitting(false);
     }
   };
+
 
   return (
     <>
