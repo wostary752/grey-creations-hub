@@ -275,10 +275,10 @@ function ServiceDetail() {
               </div>
             </div>
             <div className="grid gap-2.5">
-              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (495) 000-00-00" href="tel:+74950000000" />
-              <ContactRow icon={<Send className="h-4 w-4" />} label="Telegram" value="@metalform" href="https://t.me/metalform" />
-              <ContactRow icon={<MessageCircle className="h-4 w-4" />} label="WhatsApp" value="+7 (901) 000-00-00" href="https://wa.me/79010000000" />
-              <ContactRow icon={<Mail className="h-4 w-4" />} label="E-mail" value="info@metalform.ru" href="mailto:info@metalform.ru" />
+              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (921) 583-23-47" href="tel:+79215832347" />
+              <ContactRow icon={<Phone className="h-4 w-4" />} label="Телефон" value="+7 (981) 734-45-36" href="tel:+79817344536" />
+              <ContactRow icon={<Mail className="h-4 w-4" />} label="E-mail" value="leader-metal@mail.ru" href="mailto:leader-metal@mail.ru" />
+              <ContactRow icon={<Send className="h-4 w-4" />} label="Адрес" value="СПб, Пулковское ш., 80" href="/contacts" />
             </div>
           </div>
         </div>
