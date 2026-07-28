@@ -1,14 +1,14 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoAsset from "@/assets/logo.png.asset.json";
 
 const nav = [
-  { to: "/", label: "Главная" },
-  { to: "/services", label: "Услуги" },
-  { to: "/projects", label: "Проекты" },
-  { to: "/contacts", label: "Контакты" },
+  { to: "/", label: "Главная", end: true },
+  { to: "/services", label: "Услуги", end: false },
+  { to: "/projects", label: "Проекты", end: false },
+  { to: "/contacts", label: "Контакты", end: false },
 ] as const;
 
 export function SiteHeader() {
@@ -22,15 +22,18 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden md:flex items-center gap-8">
           {nav.map((n) => (
-            <Link
+            <NavLink
               key={n.to}
               to={n.to}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              activeProps={{ className: "text-foreground font-medium" }}
-              activeOptions={{ exact: n.to === "/" }}
+              end={n.end}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-sm text-foreground font-medium"
+                  : "text-sm text-muted-foreground hover:text-foreground transition-colors"
+              }
             >
               {n.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
         <div className="hidden md:block">

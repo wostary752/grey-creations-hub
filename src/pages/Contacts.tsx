@@ -1,20 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSEO } from "@/lib/useSEO";
 
-export const Route = createFileRoute("/contacts")({
-  head: () => ({
-    meta: [
-      { title: "Контакты — ЛИДЕР МЕТАЛЛ" },
-      { name: "description", content: "Свяжитесь с производственным предприятием ЛИДЕР МЕТАЛЛ: телефоны, e-mail, юридический адрес, реквизиты." },
-      { property: "og:title", content: "Контакты — ЛИДЕР МЕТАЛЛ" },
-      { property: "og:description", content: "Телефоны, e-mail, юридический адрес и реквизиты компании." },
-    ],
-  }),
-  component: ContactsPage,
-});
-
-function ContactsPage() {
+export default function Contacts() {
+  useSEO({
+    title: "Контакты — ЛИДЕР МЕТАЛЛ",
+    description: "Свяжитесь с производственным предприятием ЛИДЕР МЕТАЛЛ: телефоны, e-mail, юридический адрес, реквизиты.",
+    ogTitle: "Контакты — ЛИДЕР МЕТАЛЛ",
+    ogDescription: "Телефоны, e-mail, юридический адрес и реквизиты компании.",
+  });
   return (
     <section className="container-tight py-16 md:py-24">
       <div className="max-w-2xl">
@@ -24,31 +19,15 @@ function ContactsPage() {
       </div>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2">
-        <ContactCard
-          icon={<Phone className="h-5 w-5" />}
-          title="Телефоны"
-          lines={[
-            <a key="p1" href="tel:+79215832347" className="hover:text-foreground">+7 (921) 583-23-47</a>,
-            <a key="p2" href="tel:+79817344536" className="hover:text-foreground">+7 (981) 734-45-36</a>,
-          ]}
-        />
-        <ContactCard
-          icon={<Mail className="h-5 w-5" />}
-          title="E-mail"
-          lines={[
-            <a key="e1" href="mailto:leader-metal@mail.ru" className="hover:text-foreground">leader-metal@mail.ru</a>,
-          ]}
-        />
-        <ContactCard
-          icon={<MapPin className="h-5 w-5" />}
-          title="Юридический адрес"
-          lines={["196140, г. Санкт-Петербург,", "Пулковское ш., д. 80, литер А, кв. 1"]}
-        />
-        <ContactCard
-          icon={<Clock className="h-5 w-5" />}
-          title="Режим работы"
-          lines={["Пн–Пт: 9:00 – 18:00", "Сб–Вс: по договорённости"]}
-        />
+        <ContactCard icon={<Phone className="h-5 w-5" />} title="Телефоны" lines={[
+          <a key="p1" href="tel:+79215832347" className="hover:text-foreground">+7 (921) 583-23-47</a>,
+          <a key="p2" href="tel:+79817344536" className="hover:text-foreground">+7 (981) 734-45-36</a>,
+        ]} />
+        <ContactCard icon={<Mail className="h-5 w-5" />} title="E-mail" lines={[
+          <a key="e1" href="mailto:leader-metal@mail.ru" className="hover:text-foreground">leader-metal@mail.ru</a>,
+        ]} />
+        <ContactCard icon={<MapPin className="h-5 w-5" />} title="Юридический адрес" lines={["196140, г. Санкт-Петербург,", "Пулковское ш., д. 80, литер А, кв. 1"]} />
+        <ContactCard icon={<Clock className="h-5 w-5" />} title="Режим работы" lines={["Пн–Пт: 9:00 – 18:00", "Сб–Вс: по договорённости"]} />
       </div>
 
       <div className="mt-12 rounded-2xl border border-border bg-card p-8 md:p-10 shadow-[var(--shadow-soft)]">

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { services } from "@/lib/services";
 
 export function SiteFooter() {
@@ -16,7 +16,7 @@ export function SiteFooter() {
           <ul className="space-y-2 text-sm">
             {services.slice(0, 6).map((s) => (
               <li key={s.slug}>
-                <Link to="/services/$slug" params={{ slug: s.slug }} className="text-muted-foreground hover:text-foreground">
+                <Link to={`/services/${s.slug}`} className="text-muted-foreground hover:text-foreground">
                   {s.title}
                 </Link>
               </li>
