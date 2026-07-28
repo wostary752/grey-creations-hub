@@ -26,7 +26,7 @@ export function SiteHeader() {
               key={n.to}
               to={n.to}
               end={n.end}
-              className={({ isActive }) =>
+              className={({ isActive }: { isActive: boolean }) =>
                 isActive
                   ? "text-sm text-foreground font-medium"
                   : "text-sm text-muted-foreground hover:text-foreground transition-colors"
