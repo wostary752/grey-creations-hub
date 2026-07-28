@@ -1,55 +1,13 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { Link, useParams } from "react-router-dom";
 import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  FileText,
-  Ruler,
-  Calculator,
-  Handshake,
-  Cog,
-  Wrench,
-  ShieldCheck,
-  Package,
-  Phone,
-  Mail,
-  MessageCircle,
-  Send,
-  Sparkles,
+  ArrowLeft, ArrowRight, CheckCircle2, FileText, Ruler, Calculator, Handshake,
+  Cog, Wrench, ShieldCheck, Package, Phone, Mail, Send, Sparkles,
 } from "lucide-react";
 import { useState } from "react";
 import { getService, services } from "@/lib/services";
 import { projects } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
-
-export const Route = createFileRoute("/services/$slug")({
-  loader: ({ params }) => {
-    const svc = getService(params.slug);
-    if (!svc) throw notFound();
-    return { svc };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.svc.title} — ЛИДЕР МЕТАЛЛ` },
-          { name: "description", content: loaderData.svc.description.slice(0, 160) },
-          { property: "og:title", content: `${loaderData.svc.title} — ЛИДЕР МЕТАЛЛ` },
-          { property: "og:description", content: loaderData.svc.short },
-          { property: "og:image", content: loaderData.svc.image },
-          { name: "twitter:image", content: loaderData.svc.image },
-        ]
-      : [{ title: "Услуга не найдена" }, { name: "robots", content: "noindex" }],
-  }),
-  component: ServiceDetail,
-  notFoundComponent: () => (
-    <div className="container-tight py-24 text-center">
-      <h1 className="text-3xl font-bold">Услуга не найдена</h1>
-      <Link to="/services" className="mt-4 inline-block text-muted-foreground hover:text-foreground">
-        ← К списку услуг
-      </Link>
-    </div>
-  ),
-});
+import { useSEO } from "@/lib/useSEO";
 
 const processSteps = [
   { icon: FileText, title: "Получение заявки", text: "Принимаем заявку, чертежи, эскизы или фото — в любом удобном формате." },
@@ -71,13 +29,34 @@ const advantages = [
   { title: "Сложные проекты", text: "Опыт с уникальными деталями, малыми и серийными партиями." },
 ];
 
-function ServiceDetail() {
-  const { svc } = Route.useLoaderData();
+export default function ServiceDetail() {
+  const { slug = "" } = useParams();
+  const svc = getService(slug);
+  useSEO(
+    svc
+      ? {
+          title: `${svc.title} — ЛИДЕР МЕТАЛЛ`,
+          description: svc.description.slice(0, 160),
+          ogTitle: `${svc.title} — ЛИДЕР МЕТАЛЛ`,
+          ogDescription: svc.short,
+          ogImage: svc.image,
+        }
+      : { title: "Услуга не найдена", noindex: true },
+  );
+
+  if (!svc) {
+    return (
+      <div className="container-tight py-24 text-center">
+        <h1 className="text-3xl font-bold">Услуга не найдена</h1>
+        <Link to="/services" className="mt-4 inline-block text-muted-foreground hover:text-foreground">← К списку услуг</Link>
+      </div>
+    );
+  }
+
   const others = services.filter((s) => s.slug !== svc.slug).slice(0, 3);
   const samples = projects.slice(0, 3);
-
   const faq = [
-    { q: `Какие материалы вы обрабатываете?`, a: "Чёрная и нержавеющая сталь, алюминий, латунь, медь, бронза, некоторые пластики. Подскажем оптимальный материал под задачу." },
+    { q: "Какие материалы вы обрабатываете?", a: "Чёрная и нержавеющая сталь, алюминий, латунь, медь, бронза, некоторые пластики. Подскажем оптимальный материал под задачу." },
     { q: "В каком формате принимаете чертежи?", a: "DXF, DWG, STEP, PDF, а также эскизы от руки и фото. При необходимости оцифруем и подготовим КД сами." },
     { q: "Возможно ли изготовление одной штуки?", a: "Да. Работаем и с единичными изделиями, и с серией. Стоимость единицы будет выше — это нормально для штучного производства." },
     { q: "Какие сроки изготовления?", a: "Типовые заказы — от 3–5 рабочих дней. Сложные и серийные — обсуждаем индивидуально, всегда фиксируем срок в спецификации." },
@@ -86,7 +65,6 @@ function ServiceDetail() {
 
   return (
     <>
-      {/* Breadcrumb */}
       <div className="border-b border-border bg-card">
         <div className="container-tight py-4">
           <Link to="/services" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -95,7 +73,6 @@ function ServiceDetail() {
         </div>
       </div>
 
-      {/* HERO */}
       <section className="container-tight py-16 md:py-24">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] items-center">
           <div className="reveal">
@@ -105,7 +82,7 @@ function ServiceDetail() {
             <p className="mt-6 leading-relaxed text-foreground/80">{svc.description}</p>
 
             <ul className="mt-8 grid gap-2.5">
-              {svc.bullets.map((b: string) => (
+              {svc.bullets.map((b) => (
                 <li key={b} className="flex gap-3 items-start">
                   <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: "var(--brand)" }} />
                   <span className="text-sm leading-relaxed">{b}</span>
@@ -124,11 +101,7 @@ function ServiceDetail() {
           </div>
 
           <div className="relative reveal-slow">
-            <div
-              aria-hidden
-              className="absolute -inset-8 -z-10 rounded-full opacity-60 blur-3xl"
-              style={{ background: "radial-gradient(closest-side, oklch(0.55 0.14 250 / 0.18), transparent)" }}
-            />
+            <div aria-hidden className="absolute -inset-8 -z-10 rounded-full opacity-60 blur-3xl" style={{ background: "radial-gradient(closest-side, oklch(0.55 0.14 250 / 0.18), transparent)" }} />
             <div className="aspect-square overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-elev)]" style={{ background: "var(--gradient-surface)" }}>
               <img src={svc.image} alt={svc.title} width={1024} height={1024} className="h-full w-full object-cover" />
             </div>
@@ -136,7 +109,6 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* PROCESS */}
       <section className="border-y border-border bg-card">
         <div className="container-tight py-24">
           <div className="max-w-2xl reveal">
@@ -146,24 +118,13 @@ function ServiceDetail() {
           </div>
 
           <div className="relative mt-14">
-            <div
-              aria-hidden
-              className="absolute left-[27px] top-2 bottom-2 w-px hidden md:block"
-              style={{ background: "linear-gradient(180deg, transparent, var(--color-border) 10%, var(--color-border) 90%, transparent)" }}
-            />
+            <div aria-hidden className="absolute left-[27px] top-2 bottom-2 w-px hidden md:block" style={{ background: "linear-gradient(180deg, transparent, var(--color-border) 10%, var(--color-border) 90%, transparent)" }} />
             <ol className="grid gap-4">
               {processSteps.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <li
-                    key={s.title}
-                    style={{ animationDelay: `${i * 60}ms` }}
-                    className="reveal group relative grid grid-cols-[56px_1fr] items-start gap-5 rounded-2xl border border-border bg-background p-5 md:p-6 hover:shadow-[var(--shadow-card)] hover:border-transparent transition-all"
-                  >
-                    <div
-                      className="relative flex h-14 w-14 items-center justify-center rounded-xl text-white shadow-[var(--shadow-soft)]"
-                      style={{ background: "var(--gradient-steel)" }}
-                    >
+                  <li key={s.title} style={{ animationDelay: `${i * 60}ms` }} className="reveal group relative grid grid-cols-[56px_1fr] items-start gap-5 rounded-2xl border border-border bg-background p-5 md:p-6 hover:shadow-[var(--shadow-card)] hover:border-transparent transition-all">
+                    <div className="relative flex h-14 w-14 items-center justify-center rounded-xl text-white shadow-[var(--shadow-soft)]" style={{ background: "var(--gradient-steel)" }}>
                       <Icon className="h-6 w-6" />
                       <span className="absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-card px-1.5 text-[10px] font-bold text-foreground border border-border">
                         {String(i + 1).padStart(2, "0")}
@@ -181,7 +142,6 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* WHY US */}
       <section className="container-tight py-24">
         <div className="max-w-2xl reveal">
           <div className="eyebrow">Преимущества</div>
@@ -189,11 +149,7 @@ function ServiceDetail() {
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {advantages.map((a, i) => (
-            <div
-              key={a.title}
-              style={{ animationDelay: `${i * 60}ms` }}
-              className="reveal rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] hover:-translate-y-0.5 transition-all"
-            >
+            <div key={a.title} style={{ animationDelay: `${i * 60}ms` }} className="reveal rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] hover:-translate-y-0.5 transition-all">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg" style={{ background: "var(--gradient-blue)" }}>
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
@@ -204,7 +160,6 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* EXAMPLES */}
       <section className="border-y border-border bg-card">
         <div className="container-tight py-24">
           <div className="flex items-end justify-between gap-6 mb-12">
@@ -218,22 +173,16 @@ function ServiceDetail() {
           </div>
           <div className="grid gap-6 grid-cols-2 md:grid-cols-3">
             {samples.map((p, i) => (
-              <div
-                key={p.id}
-                style={{ animationDelay: `${i * 70}ms` }}
-                className="reveal group overflow-hidden rounded-2xl border border-border bg-background shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all"
-              >
+              <div key={p.id} style={{ animationDelay: `${i * 70}ms` }} className="reveal group overflow-hidden rounded-2xl border border-border bg-background shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all">
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img src={p.image} alt="Пример работы" loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-[900ms] ease-out" />
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="container-tight py-24">
         <div className="max-w-2xl reveal">
           <div className="eyebrow">Частые вопросы</div>
@@ -246,20 +195,9 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* BIG CTA */}
       <section className="container-tight pb-24">
-        <div
-          className="relative overflow-hidden rounded-3xl p-10 md:p-16"
-          style={{ background: "var(--gradient-steel)", color: "oklch(0.98 0 0)" }}
-        >
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-40"
-            style={{
-              background:
-                "radial-gradient(700px circle at 15% 20%, oklch(0.55 0.14 250 / 0.4), transparent 60%), radial-gradient(500px circle at 85% 85%, oklch(0.6 0.12 240 / 0.25), transparent 60%)",
-            }}
-          />
+        <div className="relative overflow-hidden rounded-3xl p-10 md:p-16" style={{ background: "var(--gradient-steel)", color: "oklch(0.98 0 0)" }}>
+          <div aria-hidden className="absolute inset-0 opacity-40" style={{ background: "radial-gradient(700px circle at 15% 20%, oklch(0.55 0.14 250 / 0.4), transparent 60%), radial-gradient(500px circle at 85% 85%, oklch(0.6 0.12 240 / 0.25), transparent 60%)" }} />
           <div className="relative grid gap-10 md:grid-cols-[1.4fr_1fr] items-center">
             <div>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.05]">
@@ -284,17 +222,11 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* OTHERS */}
       <section className="container-tight pb-24">
         <h2 className="text-2xl font-bold mb-8">Другие услуги</h2>
         <div className="grid gap-5 md:grid-cols-3">
           {others.map((s) => (
-            <Link
-              key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
-              className="group rounded-2xl overflow-hidden border border-border bg-card shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] hover:-translate-y-0.5 transition-all"
-            >
+            <Link key={s.slug} to={`/services/${s.slug}`} className="group rounded-2xl overflow-hidden border border-border bg-card shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] hover:-translate-y-0.5 transition-all">
               <div className="aspect-[4/3] overflow-hidden" style={{ background: "var(--gradient-surface)" }}>
                 <img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
@@ -313,26 +245,14 @@ function ServiceDetail() {
 function FaqItem({ q, a, delay = 0 }: { q: string; a: string; delay?: number }) {
   const [open, setOpen] = useState(false);
   return (
-    <div
-      style={{ animationDelay: `${delay}ms` }}
-      className="reveal rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)] overflow-hidden"
-    >
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between gap-4 p-5 text-left transition-colors hover:bg-muted/40"
-      >
+    <div style={{ animationDelay: `${delay}ms` }} className="reveal rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)] overflow-hidden">
+      <button onClick={() => setOpen((v) => !v)} className="flex w-full items-center justify-between gap-4 p-5 text-left transition-colors hover:bg-muted/40">
         <span className="font-medium">{q}</span>
-        <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border transition-transform duration-300"
-          style={{ transform: open ? "rotate(45deg)" : "rotate(0)" }}
-        >
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border transition-transform duration-300" style={{ transform: open ? "rotate(45deg)" : "rotate(0)" }}>
           <span className="text-lg leading-none">+</span>
         </span>
       </button>
-      <div
-        className="grid transition-[grid-template-rows] duration-300 ease-out"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-      >
+      <div className="grid transition-[grid-template-rows] duration-300 ease-out" style={{ gridTemplateRows: open ? "1fr" : "0fr" }}>
         <div className="overflow-hidden">
           <p className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">{a}</p>
         </div>
@@ -343,12 +263,7 @@ function FaqItem({ q, a, delay = 0 }: { q: string; a: string; delay?: number }) 
 
 function ContactRow({ icon, label, value, href }: { icon: React.ReactNode; label: string; value: string; href: string }) {
   return (
-    <a
-      href={href}
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel="noreferrer"
-      className="flex items-center gap-3 rounded-xl border border-white/15 bg-white/5 backdrop-blur px-4 py-3 hover:bg-white/10 transition-colors"
-    >
+    <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex items-center gap-3 rounded-xl border border-white/15 bg-white/5 backdrop-blur px-4 py-3 hover:bg-white/10 transition-colors">
       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10">{icon}</div>
       <div className="min-w-0">
         <div className="text-[11px] uppercase tracking-[0.15em] opacity-60">{label}</div>

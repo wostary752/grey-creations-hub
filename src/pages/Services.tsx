@@ -1,24 +1,15 @@
-import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { services } from "@/lib/services";
+import { useSEO } from "@/lib/useSEO";
 
-export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Услуги — ЛИДЕР МЕТАЛЛ" },
-      { name: "description", content: "Лазерная резка, гибка, сварные работы, механическая обработка, проектирование изделий на заказ и производство полного цикла." },
-      { property: "og:title", content: "Услуги производства — ЛИДЕР МЕТАЛЛ" },
-      { property: "og:description", content: "Полный список услуг предприятия." },
-    ],
-  }),
-  component: ServicesLayout,
-});
-
-function ServicesLayout() {
-  const matches = useMatches();
-  const isChild = matches.some((m) => m.routeId === "/services/$slug");
-  if (isChild) return <Outlet />;
-
+export default function Services() {
+  useSEO({
+    title: "Услуги — ЛИДЕР МЕТАЛЛ",
+    description: "Лазерная резка, гибка, сварные работы, механическая обработка, проектирование изделий на заказ и производство полного цикла.",
+    ogTitle: "Услуги производства — ЛИДЕР МЕТАЛЛ",
+    ogDescription: "Полный список услуг предприятия.",
+  });
   return (
     <section className="container-tight py-20 md:py-28">
       <div className="max-w-2xl reveal">
@@ -33,20 +24,12 @@ function ServicesLayout() {
         {services.map((s, i) => (
           <Link
             key={s.slug}
-            to="/services/$slug"
-            params={{ slug: s.slug }}
+            to={`/services/${s.slug}`}
             style={{ animationDelay: `${i * 70}ms` }}
             className="reveal group relative overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elev)] hover:-translate-y-1 transition-all duration-500"
           >
             <div className="aspect-[4/3] overflow-hidden" style={{ background: "var(--gradient-surface)" }}>
-              <img
-                src={s.image}
-                alt={s.title}
-                loading="lazy"
-                width={1024}
-                height={1024}
-                className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
-              />
+              <img src={s.image} alt={s.title} loading="lazy" width={1024} height={1024} className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]" />
             </div>
             <div className="p-6">
               <h2 className="font-display font-semibold text-lg tracking-tight">{s.title}</h2>

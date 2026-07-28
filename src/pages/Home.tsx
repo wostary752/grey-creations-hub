@@ -1,29 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, Clock, Layers, Sparkles, Award } from "lucide-react";
 import heroImg from "@/assets/hero-new.jpg";
 import { services } from "@/lib/services";
 import { Button } from "@/components/ui/button";
+import { useSEO } from "@/lib/useSEO";
 
-export const Route = createFileRoute("/")({
-  component: Home,
-});
-
-function Home() {
+export default function Home() {
+  useSEO({
+    title: "ЛИДЕР МЕТАЛЛ — производство металлоизделий и конструкторское бюро",
+    description: "Лазерная резка, гибка, сварные работы, механическая обработка. Собственное КБ. Проектирование изделий на заказ с последующим изготовлением.",
+    ogTitle: "ЛИДЕР МЕТАЛЛ — производство металлоизделий и конструкторское бюро",
+    ogDescription: "Полный цикл: проектирование, металлообработка, изготовление.",
+  });
   return (
     <>
-      {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={heroImg}
-            alt="ЛИДЕР МЕТАЛЛ — производство металлоизделий"
-            width={1920}
-            height={1200}
-            className="h-full w-full object-cover"
-          />
+          <img src={heroImg} alt="ЛИДЕР МЕТАЛЛ — производство металлоизделий" width={1920} height={1200} className="h-full w-full object-cover" />
           <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
         </div>
-
         <div className="container-tight relative py-28 md:py-40">
           <div className="max-w-3xl reveal">
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 backdrop-blur px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -35,14 +30,11 @@ function Home() {
               <span className="text-muted-foreground">от чертежа до партии</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Собственное конструкторское бюро и производственный цех.
-              Лазерная резка, гибка, сварка, механическая обработка и проектирование изделий на заказ.
+              Собственное конструкторское бюро и производственный цех. Лазерная резка, гибка, сварка, механическая обработка и проектирование изделий на заказ.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Button asChild size="lg" className="h-12 px-6 text-base shadow-[var(--shadow-glow)]">
-                <Link to="/request">
-                  Оставить заявку <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                <Link to="/request">Оставить заявку <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base bg-card">
                 <Link to="/services">Все услуги</Link>
@@ -51,37 +43,19 @@ function Home() {
           </div>
 
           <div className="mt-20 grid gap-4 sm:grid-cols-3 max-w-4xl">
-            <Advantage
-              icon={<Award className="h-5 w-5" />}
-              title="6+ лет"
-              text="опыт работы в металлообработке"
-              delay={0.1}
-            />
-            <Advantage
-              icon={<Clock className="h-5 w-5" />}
-              title="Расчёт стоимости"
-              text="в течение рабочего дня"
-              delay={0.2}
-            />
-            <Advantage
-              icon={<Layers className="h-5 w-5" />}
-              title="Полный цикл"
-              text="от проектирования до готового изделия"
-              delay={0.3}
-            />
+            <Advantage icon={<Award className="h-5 w-5" />} title="6+ лет" text="опыт работы в металлообработке" delay={0.1} />
+            <Advantage icon={<Clock className="h-5 w-5" />} title="Расчёт стоимости" text="в течение рабочего дня" delay={0.2} />
+            <Advantage icon={<Layers className="h-5 w-5" />} title="Полный цикл" text="от проектирования до готового изделия" delay={0.3} />
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
       <section className="container-tight py-24 md:py-32">
         <div className="flex items-end justify-between gap-6 mb-14">
           <div className="max-w-2xl reveal">
             <div className="eyebrow">Возможности предприятия</div>
             <h2 className="mt-3 text-4xl md:text-5xl font-bold">Что мы делаем</h2>
-            <p className="mt-4 text-muted-foreground">
-              Каждая услуга — самостоятельный участок производства. Мы объединяем их в один маршрут для вашего изделия.
-            </p>
+            <p className="mt-4 text-muted-foreground">Каждая услуга — самостоятельный участок производства. Мы объединяем их в один маршрут для вашего изделия.</p>
           </div>
           <Link to="/services" className="hidden md:inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
             Все услуги <ArrowRight className="h-4 w-4" />
@@ -92,27 +66,18 @@ function Home() {
           {services.map((s, i) => (
             <Link
               key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
+              to={`/services/${s.slug}`}
               style={{ animationDelay: `${i * 80}ms` }}
               className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elev)] hover:-translate-y-1 transition-all duration-500 reveal"
             >
               <div className="aspect-[4/3] overflow-hidden" style={{ background: "var(--gradient-surface)" }}>
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
-                />
+                <img src={s.image} alt={s.title} loading="lazy" width={1024} height={1024} className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]" />
               </div>
               <div className="p-6">
                 <h3 className="font-display font-semibold text-lg tracking-tight">{s.title}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">{s.short}</p>
                 <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 group-hover:text-[color:var(--brand)] transition-colors">
-                  Подробнее
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  Подробнее <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>
             </Link>
@@ -120,7 +85,6 @@ function Home() {
         </div>
       </section>
 
-      {/* WHY */}
       <section className="border-y border-border bg-card">
         <div className="container-tight py-24 grid gap-12 md:grid-cols-2 items-center">
           <div className="reveal">
@@ -138,11 +102,7 @@ function Home() {
               "Партии от 1 шт. до серийного производства",
               "Прозрачные сроки и фиксированная стоимость",
             ].map((t, i) => (
-              <li
-                key={t}
-                style={{ animationDelay: `${i * 70}ms` }}
-                className="flex items-start gap-3 rounded-xl bg-background border border-border p-4 reveal"
-              >
+              <li key={t} style={{ animationDelay: `${i * 70}ms` }} className="flex items-start gap-3 rounded-xl bg-background border border-border p-4 reveal">
                 <div className="flex h-6 w-6 items-center justify-center rounded-md shrink-0" style={{ background: "var(--gradient-blue)" }}>
                   <CheckCircle2 className="h-4 w-4 text-white" />
                 </div>
@@ -153,38 +113,18 @@ function Home() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="container-tight py-24 md:py-32">
-        <div
-          className="relative overflow-hidden rounded-3xl p-12 md:p-16 text-center"
-          style={{ background: "var(--gradient-steel)", color: "oklch(0.98 0 0)" }}
-        >
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-40"
-            style={{
-              background:
-                "radial-gradient(600px circle at 20% 20%, oklch(0.55 0.14 250 / 0.35), transparent 60%), radial-gradient(500px circle at 80% 80%, oklch(0.6 0.12 240 / 0.25), transparent 60%)",
-            }}
-          />
+        <div className="relative overflow-hidden rounded-3xl p-12 md:p-16 text-center" style={{ background: "var(--gradient-steel)", color: "oklch(0.98 0 0)" }}>
+          <div aria-hidden className="absolute inset-0 opacity-40" style={{ background: "radial-gradient(600px circle at 20% 20%, oklch(0.55 0.14 250 / 0.35), transparent 60%), radial-gradient(500px circle at 80% 80%, oklch(0.6 0.12 240 / 0.25), transparent 60%)" }} />
           <div className="relative">
             <Sparkles className="h-6 w-6 mx-auto opacity-70" />
-            <h2 className="mt-5 text-3xl md:text-5xl font-bold tracking-tight">
-              Расскажите о задаче — рассчитаем стоимость
-            </h2>
-            <p className="mt-5 opacity-75 max-w-xl mx-auto leading-relaxed">
-              Прикрепите чертёж, фото или опишите словами. Свяжемся в течение рабочего дня.
-            </p>
+            <h2 className="mt-5 text-3xl md:text-5xl font-bold tracking-tight">Расскажите о задаче — рассчитаем стоимость</h2>
+            <p className="mt-5 opacity-75 max-w-xl mx-auto leading-relaxed">Прикрепите чертёж, фото или опишите словами. Свяжемся в течение рабочего дня.</p>
             <div className="mt-10 flex justify-center gap-3 flex-wrap">
               <Button asChild size="lg" variant="secondary" className="h-12 px-6 text-base">
                 <Link to="/request">Оставить заявку</Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-12 px-6 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white"
-              >
+              <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white">
                 <Link to="/contacts">Контакты</Link>
               </Button>
             </div>
@@ -195,25 +135,10 @@ function Home() {
   );
 }
 
-function Advantage({
-  icon,
-  title,
-  text,
-  delay = 0,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-  delay?: number;
-}) {
+function Advantage({ icon, title, text, delay = 0 }: { icon: React.ReactNode; title: string; text: string; delay?: number }) {
   return (
-    <div
-      style={{ animationDelay: `${delay}s` }}
-      className="group flex h-full flex-col justify-between gap-6 rounded-3xl border border-border/70 bg-card/95 backdrop-blur p-7 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-elev)] reveal"
-    >
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-background text-foreground/80 transition-colors group-hover:text-foreground">
-        {icon}
-      </div>
+    <div style={{ animationDelay: `${delay}s` }} className="group flex h-full flex-col justify-between gap-6 rounded-3xl border border-border/70 bg-card/95 backdrop-blur p-7 shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-elev)] reveal">
+      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-background text-foreground/80 transition-colors group-hover:text-foreground">{icon}</div>
       <div>
         <div className="font-display text-xl font-semibold tracking-tight text-foreground">{title}</div>
         <div className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{text}</div>
@@ -221,4 +146,3 @@ function Advantage({
     </div>
   );
 }
-
