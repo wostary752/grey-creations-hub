@@ -8,7 +8,7 @@ export default function Projects() {
     title: "Портфолио — ЛИДЕР МЕТАЛЛ",
     description: "Кураторская фотогалерея реальных производственных работ ЛИДЕР МЕТАЛЛ: сварные конструкции, кронштейны, узлы, лазерная резка.",
     ogTitle: "Портфолио — ЛИДЕР МЕТАЛЛ",
-    ogDescription: "Ремесло через фотографию: сварка, резка, сборка, точная обработка.",
+    ogDescription: "Портфолио работ: сварка, резка, сборка, точная обработка.",
     ogImage: projects[0].image,
   });
   return (
@@ -22,7 +22,7 @@ export default function Projects() {
           </div>
           <div className="col-span-12 md:col-span-8">
             <h1 className="font-display text-4xl sm:text-5xl md:text-7xl leading-[1.02] tracking-tight font-medium">
-              Ремесло<br /><span className="text-neutral-400">в кадре</span>
+              Портфолио<br /><span className="text-neutral-400">работ</span>
             </h1>
             <p className="mt-6 md:mt-8 max-w-lg text-neutral-500 text-base md:text-lg leading-relaxed">
               Кураторская подборка производственных снимков наших работ.
