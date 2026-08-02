@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoAsset from "@/assets/logo.png.asset.json";
+
 
 const nav = [
   { to: "/", label: "Главная", end: true },
