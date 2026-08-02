@@ -17,7 +17,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="container-tight flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5 font-display font-bold text-lg tracking-tight">
-          <img src={logoAsset.url} alt="ЛИДЕР МЕТАЛЛ" className="h-10 w-auto md:h-11 object-contain" />
+          <img src="/logo.png" alt="ЛИДЕР МЕТАЛЛ" className="h-10 w-auto md:h-11 object-contain" />
           ЛИДЕР МЕТАЛЛ
         </Link>
         <nav className="hidden md:flex items-center gap-8">
