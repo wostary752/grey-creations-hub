@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Paperclip, X, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 type Preset = { subject?: string };
 
@@ -29,11 +30,27 @@ export function RequestForm({ preset }: { preset?: Preset }) {
     setSubmitting(true);
     try {
       const fd = new FormData(formEl);
-      // Formspree expects file inputs with a name; use "file" (single) or "file[]" (multiple)
-      files.forEach((f) => fd.append("file[]", f, f.name));
+
       if (files.length > 0) {
-        fd.append("_attachments_note", `Прикреплено файлов: ${files.length} (${files.map((f) => f.name).join(", ")})`);
+        const links: string[] = [];
+        const stamp = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        for (const f of files) {
+          const safeName = f.name.replace(/[^\w.\-]+/g, "_");
+          const path = `${stamp}/${safeName}`;
+          const { error: upErr } = await supabase.storage.from("request-files").upload(path, f, {
+            cacheControl: "3600",
+            upsert: false,
+          });
+          if (upErr) throw new Error(`Не удалось загрузить файл «${f.name}»: ${upErr.message}`);
+          const { data: signed, error: signErr } = await supabase.storage
+            .from("request-files")
+            .createSignedUrl(path, 60 * 60 * 24 * 365);
+          if (signErr || !signed) throw new Error(`Не удалось получить ссылку на «${f.name}»`);
+          links.push(`${f.name}: ${signed.signedUrl}`);
+        }
+        fd.append("Прикреплённые файлы", links.join("\n"));
       }
+
       const res = await fetch("https://formspree.io/f/mzdnyzzp", {
         method: "POST",
         body: fd,
@@ -59,6 +76,7 @@ export function RequestForm({ preset }: { preset?: Preset }) {
       setSubmitting(false);
     }
   };
+
 
 
   return (
