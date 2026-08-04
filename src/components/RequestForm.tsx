@@ -233,7 +233,7 @@ function FileField({ files, onFiles, removeFile, label = "Прикрепить �
       <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground hover:bg-muted transition">
         <Paperclip className="h-4 w-4" />
         <span>Нажмите, чтобы выбрать файлы (JPG, PNG, PDF, DWG…)</span>
-        <input type="file" multiple className="hidden" onChange={onFiles} accept="image/*,application/pdf,.dwg,.dxf,.step,.stp" />
+        <input type="file" multiple className="hidden" onChange={onFiles} />
       </label>
       {files.length > 0 && (
         <ul className="grid gap-1.5">
